@@ -3,25 +3,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    
    <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/et_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:ems="10" >
+        android:ems="10"
+        android:hint="Message" >
     </EditText>
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/button_encrypt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
+        android:layout_below="@+id/et_message"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="22dp"
-        android:text="Button" />
-    
+        android:text="Encrypt and send" />
 
+    <Button
+        android:id="@+id/button_decrypt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/button_encrypt"
+        android:layout_centerHorizontal="true"
+        android:text="Decrypt" />
 
 </RelativeLayout>
