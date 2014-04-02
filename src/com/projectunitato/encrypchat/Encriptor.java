@@ -74,7 +74,7 @@ public class Encriptor {
 	        PrivateKey privateKey = kp.getPrivate();
 	 
 	        text = message;
-	        Cipher cipher = Cipher.getInstance("EAS");
+	        Cipher cipher = Cipher.getInstance("RSA");
 	        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 	        byte[] x = cipher.doFinal(text.getBytes());
 	 
@@ -92,7 +92,7 @@ public class Encriptor {
 	{
 		
 		try{
-		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("EAS");
+		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 		keyGen.initialize(2048);
         KeyPair kp = keyGen.genKeyPair();
         return kp;
@@ -113,7 +113,7 @@ public class Encriptor {
 	        PrivateKey privateKey = kp.getPrivate();
 	 
 	        text = message;
-	        Cipher cipher = Cipher.getInstance("EAS");
+	        Cipher cipher = Cipher.getInstance("RSA");
 	        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 	        
 	        cipher.init(Cipher.DECRYPT_MODE, privateKey);
