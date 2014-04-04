@@ -1,63 +1,85 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <EditText
-            android:id="@+id/et_key"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="69"
-            android:hint="AES Key"
-            android:maxLength="16"
-            android:inputType="textPassword"
-            android:enabled="false" >
-
-            <requestFocus />
-        </EditText>
-
-        <ToggleButton
-            android:id="@+id/toggle_show_key"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ToggleButton" />
-
-    </LinearLayout>
-    
-    <EditText
-        android:id="@+id/et_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Message" />
-    
+<ScrollView
+   		xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:id="@+id/scrollView1"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	    
 	<LinearLayout 
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal" >
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <EditText
+	            android:id="@+id/et_key"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="69"
+	            android:hint="AES Key"
+	            android:maxLength="16"
+	            android:inputType="textPassword"
+	            android:enabled="false" >
+	
+	            <requestFocus />
+	        </EditText>
+	
+	        <ToggleButton
+	            android:id="@+id/toggle_show_key"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="ToggleButton"
+	            android:textOn="On"
+	            android:textOff="Off" />
+	
+	    </LinearLayout>
 	    
-	    
-	    <Button
-	        android:id="@+id/button_encrypt"
+	    <EditText
+	        android:id="@+id/et_message"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:layout_weight="1"
-	        android:text="Encrypt and send" />
-	
-	    <Button
-	        android:id="@+id/button_decrypt"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:layout_weight="2"
-	        android:text="Decrypt" />
+	        android:hint="Message"
+	        android:inputType="textMultiLine" />
 	    
-    </LinearLayout>
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal" >
+		    
+		    
+		    <Button
+		        android:id="@+id/button_encrypt"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Encrypt and send" />
+		
+		    <Button
+		        android:id="@+id/button_decrypt"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="2"
+		        android:text="Decrypt" />
+		    
+	    </LinearLayout>
 
+		<CheckBox
+		    android:id="@+id/checkbox_sendSms"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Send SMS" />
+
+		<CheckBox
+		    android:id="@+id/checkbox_copy"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Copy to clipboard" />
 	
-
-</LinearLayout>
+	</LinearLayout>
+	
+	
+</ScrollView>

@@ -1,12 +1,20 @@
 package com.projectunitato.encrypchat;
 
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ToggleButton;
@@ -17,11 +25,13 @@ public class MainActivity extends Activity {
 	ToggleButton showKeyToggle;
 	EditText messageEt, keyEt;
 	Button btnEncrypt, btnDecrypt;
-	String PRIVATE_KEY_KEY = "rsa_private";
+	String KEY_PRIVATE_KEY = "rsa_private";
 	String KEY_AES_KEY = "aes_key";
 	String PREF_NAME = "default";
 	Encriptor encriptor;
 	SharedPreferences prefs;
+	CheckBox sendSmsCheckbox, copyCheckBox;
+	static ClipboardManager clipboard;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +96,12 @@ public class MainActivity extends Activity {
 		btnEncrypt = (Button) findViewById(R.id.button_encrypt);
 		btnDecrypt = (Button) findViewById(R.id.button_decrypt);
 		showKeyToggle = (ToggleButton) findViewById(R.id.toggle_show_key);
+		clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
+		sendSmsCheckbox = (CheckBox) findViewById(R.id.checkbox_sendSms);
+		copyCheckBox = (CheckBox) findViewById(R.id.checkbox_copy);
+		
+		if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
+			copyCheckBox.setVisibility(View.INVISIBLE);
 		
 		keyEt.setText(aespref);
 		
@@ -97,7 +113,7 @@ public class MainActivity extends Activity {
 				/*
 				Intent sendIntent = new Intent(Intent.ACTION_VIEW);
 				sendIntent.setData(Uri.parse("sms:"));
-				sendIntent.putExtra("sms_body", Encriptor.Encript(et.getText().toString(), kp));
+				sendIntent.putExtra("sms_body", encriptor.AESEncrypt(et.getText().toString()));
 				startActivity(sendIntent);
 				
 				*/
@@ -106,6 +122,17 @@ public class MainActivity extends Activity {
 				encriptor.setAESKey(keyEt.getText().toString());
 				prefs.edit().putString(KEY_AES_KEY, keyEt.getText().toString()).apply();
 				messageEt.setText(encriptor.AESEncrypt(messageEt.getText().toString()));
+				int currentapiVersion = android.os.Build.VERSION.SDK_INT;
+				if(sendSmsCheckbox.isChecked())
+				{
+					Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+					sendIntent.setData(Uri.parse("sms:"));
+					sendIntent.putExtra("sms_body", encriptor.AESEncrypt(messageEt.getText().toString()));
+					startActivity(sendIntent);
+				}
+				if (copyCheckBox.isChecked() && currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
+				    copyText(messageEt.getText().toString());
+				
 			}
 			
 		});
@@ -127,7 +154,8 @@ public class MainActivity extends Activity {
 			}
 		});
 		
-		
+		 
+
 		
 		showKeyToggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			
@@ -146,5 +174,14 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+	
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
+	private static void copyText(String text)
+	{
+		 ClipData clip = ClipData.newPlainText("Message", text);
+		 clipboard.setPrimaryClip(clip);
+	}
+	
+	
 	
 }

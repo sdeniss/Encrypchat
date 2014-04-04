@@ -153,12 +153,12 @@ public class Encriptor {
 		
 		//========BOB=======
 		String aesKey = GenerateAESKeyString();
-		String encryptedAesKey = RSAEncript(aesKey, pkStr);
+		String encryptedAesKey = RSAEncrypt(aesKey, pkStr);
 		//SEND encryptedAesKey
 		
 		
 		//=======ALICE======
-		String decryptedAesKey = RSADecript(encryptedAesKey, prStr);
+		String decryptedAesKey = RSADecrypt(encryptedAesKey, prStr);
 		String message = "HELLO WORLD";
 		String toSend = AESEncrypt(decryptedAesKey, message);
 		//SEND toSend
@@ -169,7 +169,6 @@ public class Encriptor {
 		try {
 			decryptedMsg = AESDecrypt(aesKey, toSend);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Log.i("strings", decryptedMsg);
@@ -207,7 +206,6 @@ public class Encriptor {
 	    	
 	    	end = AESDecrypt(tmpKey, msgString);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	    
@@ -418,7 +416,7 @@ public class Encriptor {
 	
 	
 	
-	public static String RSAEncript(String message, String publicKeyString)
+	public static String RSAEncrypt(String message, String publicKeyString)
 	{
 		String text = null;
 		PublicKey publicKey = string2public(publicKeyString);
@@ -437,7 +435,7 @@ public class Encriptor {
 	
 	
 	
-	public String RSAEncript(String message)
+	public String RSAEncrypt(String message)
 	{
 		String text = null;
 		PublicKey publicKey = keyPair.getPublic();
@@ -578,10 +576,10 @@ public class Encriptor {
 	
 	
 	
-	public static String RSADecript(String message, String privateKeyString)
+	public static String RSADecrypt(String message, String privateKeyString)
 	{
 		PrivateKey privateKey = string2private(privateKeyString);
-		Log.d("Cipher", "Decript in: " + message);
+		Log.d("Cipher", "Decrypt in: " + message);
 		String text = null;
 		try{
 	 
@@ -604,10 +602,10 @@ public class Encriptor {
 	
 	
 	
-	public String RSADecript(String message)
+	public String RSADecrypt(String message)
 	{
 		PrivateKey privateKey = keyPair.getPrivate();
-		Log.d("Cipher", "Decript in: " + message);
+		Log.d("Cipher", "Decrypt in: " + message);
 		String text = null;
 		try{
 	 
