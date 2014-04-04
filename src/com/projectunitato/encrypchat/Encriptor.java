@@ -1,19 +1,13 @@
 package com.projectunitato.encrypchat;
 
-import java.nio.charset.Charset;
-import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
-import java.util.List;
+import java.util.Random;
 
-import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
 import android.util.Log;
@@ -29,25 +23,83 @@ public class Encriptor {
 	public Encriptor(String AESKey)
 	{
 		AESkey = AESKey;
+	}
+	
+	public String Decrypt(String message)
+	{
+		String decryptedMsg = null;
+		return decryptedMsg;
+	}
+	
+	public static String Decrypt(String message, Key AESkey)
+	{
+		return null;
+	}
+	
+	
+	
+	public static void SampleTransmissionStart()
+	{
+		//=======ALICE======
+		KeyPair kp = GenerateRSAKeyPair(); 
+		PublicKey publicKey = kp.getPublic();
+		//SEND publicKey
 		
+		//========BOB=======
+		String aesKey = GenerateAESKeyString();
+		String encryptedAesKey = RSAEncript(aesKey, publicKey);
+		//SEND encryptedAesKey
+		
+		
+		//=======ALICE======
+		String decryptedAesKey = RSADecript(encryptedAesKey, kp.getPrivate());
+		String message = "HELLO WORLD";
+		String toSend = AESEncrypt(decryptedAesKey, message);
+		//SEND toSend
+		
+		
+		//========BOB=======		
+		String decryptedMsg = "";
+		try {
+			decryptedMsg = AESDecrypt(aesKey, toSend);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Log.i("strings", decryptedMsg);
 	}
 	
 	
 	
 	
 	
+	static public String GenerateAESKeyString()
+	{
+		Random r = new Random();
+		String keyString = "";
+		for(int i = 0; i < 16; i++){
+			if(r.nextBoolean())
+				keyString += (char) r.nextInt(128);
+			else
+				keyString += (char) r.nextInt(128);
+		}
+		return keyString;
+	}
+	
 	//testing function
-	public static void Run()
+	public static void TestRun()
 	{
 		String str = "Hello World";
-		String tmpKey = "123qweasdzxc!@#$";
-		byte[] encryptedMsg = aesEncrypt(tmpKey, str);
-	    String msgString = byte2hex(encryptedMsg);
-	    byte[] decryptedMsg = null;
+		String tmpKey = GenerateAESKeyString();//"123qweasdzxc!@#$";
+	    String msgString = AESEncrypt(tmpKey, str);
 	    String end = null;
 	    try {
-			decryptedMsg = aesDecrypt(tmpKey, hex2byte(msgString.getBytes()));
+	    	/* 	//OLD SYNTAX:
+			decryptedMsg = AESDecrypt(tmpKey, hex2byte(msgString.getBytes()));
 			end = new String(decryptedMsg);
+			*/
+	    	
+	    	end = AESDecrypt(tmpKey, msgString);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -127,14 +179,16 @@ public class Encriptor {
 	 
 
 	 // encryption function
-	 public static byte[] aesEncrypt(String keyString, String contentString) {
+	 public static String AESEncrypt(String keyString, String contentString) {
 	
 		 try 
 		 {
 			 byte[] returnArray;
 		
+			 
+			 
 			 // generate AES secret key from user input
-			 Key key = generateKey(keyString);
+			 Key key = AESKeyFromString(keyString);
 		
 			 // specify the cipher algorithm using AES
 			 Cipher c = Cipher.getInstance("AES");
@@ -145,12 +199,12 @@ public class Encriptor {
 			 // encrypt
 			 returnArray = c.doFinal(contentString.getBytes());
 		
-			 return returnArray;
+			 return byte2hex(returnArray);
 	
 		 } catch (Exception e) {
 			 e.printStackTrace();
 			 byte[] returnArray = null;
-			 return returnArray;
+			 return byte2hex(returnArray);
 		 }
 	
 		 }
@@ -158,10 +212,11 @@ public class Encriptor {
 	
 	
 	 // decryption function
-	 public static byte[] aesDecrypt(String secretKeyString, byte[] encryptedMsg) throws Exception {
-	
+	 public static String AESDecrypt(String secretKeyString, String encryptedMsgString) throws Exception {
+		 byte[] encryptedMsg = hex2byte(encryptedMsgString.getBytes());;
+		 
 		 // generate AES key from the user input secret key
-		 Key key = generateKey(secretKeyString);
+		 Key key = AESKeyFromString(secretKeyString);
 	
 		 // get the cipher algorithm for AES
 		 Cipher c = Cipher.getInstance("AES");
@@ -171,13 +226,14 @@ public class Encriptor {
 	
 		 // decrypt the message
 		 byte[] decValue = c.doFinal(encryptedMsg);
-	
-		 return decValue;
+		 
+		 String decStr = new String(decValue);
+		 return decStr;
 	 }
 	
 	
 	
-	 private static Key generateKey(String secretKeyString) throws Exception {
+	 private static Key AESKeyFromString(String secretKeyString) throws Exception {
 		 // generate AES key from string
 		 Key key = new SecretKeySpec(secretKeyString.getBytes(), "AES");
 		 return key;
@@ -192,14 +248,12 @@ public class Encriptor {
 	
 	
 	
-	public static String RsaEncript(String message, KeyPair kp)
+	public static String RSAEncript(String message, PublicKey publicKey)
 	{
 		String text = null;
 		try{
 			
 	 
-	        PublicKey publicKey = kp.getPublic();
-	        PrivateKey privateKey = kp.getPrivate();
 	 
 	        text = message;
 	        Cipher cipher = Cipher.getInstance("RSA");
@@ -216,7 +270,7 @@ public class Encriptor {
 	}
 	
 	
-	public static KeyPair genKeyPair()
+	public static KeyPair GenerateRSAKeyPair()
 	{
 		
 		try{
@@ -232,17 +286,14 @@ public class Encriptor {
 	
 	
 	
-	public static String RsaDecript(String message, KeyPair kp)
+	public static String RSADecript(String message, PrivateKey privateKey)
 	{
 		Log.d("Cipher", "Decript in: " + message);
 		String text = null;
 		try{
-			PublicKey publicKey = kp.getPublic();
-	        PrivateKey privateKey = kp.getPrivate();
 	 
 	        text = message;
 	        Cipher cipher = Cipher.getInstance("RSA");
-	        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 	        
 	        cipher.init(Cipher.DECRYPT_MODE, privateKey);
 	        byte[] y = cipher.doFinal(getByte(message));
