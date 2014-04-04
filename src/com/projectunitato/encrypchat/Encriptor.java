@@ -14,60 +14,188 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 
 import android.util.Log;
 
 
 public class Encriptor {
 	
-	public static String Encript(String message, KeyPair kp)
+	
+	private String AESkey;
+	
+	
+	
+	public Encriptor(String AESKey)
 	{
-		/*
-		 * TODO
-		 * USE new String(Byte[]) instead of ToString!!!!
-		 */
+		AESkey = AESKey;
+		
+	}
+	
+	
+	
+	
+	
+	//testing function
+	public static void Run()
+	{
+		String str = "Hello World";
+		String tmpKey = "123qweasdzxc!@#$";
+		byte[] encryptedMsg = aesEncrypt(tmpKey, str);
+	    String msgString = byte2hex(encryptedMsg);
+	    byte[] decryptedMsg = null;
+	    String end = null;
+	    try {
+			decryptedMsg = aesDecrypt(tmpKey, hex2byte(msgString.getBytes()));
+			end = new String(decryptedMsg);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    
+	}
+	
+	
+	
+	/*
+	 * 
+	 * Encriptor enc = new Encriptor(sharedprefs.getPref("EASkey" + chatId);
+	 * 
+	 * MessageReceivedListener()
+	 * {
+	 * 		OnReceive(String Message)
+	 * 		{
+	 * 			enc.Decrypt(message);
+	 * 			textview.settext(this^);
+	 * 		}
+	 * }
+	 * 
+	 * 
+	 * NewMessage(String number)
+	 * {
+	 * 		KeyPair kp = Encriptor.GenerateKeyPair();
+	 * }
+	 */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	 // utility function
+	 public static String byte2hex(byte[] b) 
+	 {
+		 String hs = "";
+		 String stmp = "";
+		 for (int n = 0; n < b.length; n++) 
+		 {
+			 stmp = Integer.toHexString(b[n] & 0xFF);
+			 if (stmp.length() == 1)
+				 hs += ("0" + stmp);
+			 else
+				 hs += stmp;
+		 }
+		 return hs.toUpperCase();
+	 }
+	 
+	 
+	 // utility function: convert hex array to byte array
+	 public static byte[] hex2byte(byte[] b) 
+	 {
+		 if ((b.length % 2) != 0)
+			 throw new IllegalArgumentException("hello");
+	
+		 byte[] b2 = new byte[b.length / 2];
+	
+		 for (int n = 0; n < b.length; n += 2) 
+		 {
+			 String item = new String(b, n, 2);
+			 b2[n / 2] = (byte) Integer.parseInt(item, 16);
+		 }
+		 return b2;
+	 }
+	 
+	 
+	 
+	 
+
+	 // encryption function
+	 public static byte[] aesEncrypt(String keyString, String contentString) {
+	
+		 try 
+		 {
+			 byte[] returnArray;
+		
+			 // generate AES secret key from user input
+			 Key key = generateKey(keyString);
+		
+			 // specify the cipher algorithm using AES
+			 Cipher c = Cipher.getInstance("AES");
+		
+			 // specify the encryption mode
+			 c.init(Cipher.ENCRYPT_MODE, key);
+		
+			 // encrypt
+			 returnArray = c.doFinal(contentString.getBytes());
+		
+			 return returnArray;
+	
+		 } catch (Exception e) {
+			 e.printStackTrace();
+			 byte[] returnArray = null;
+			 return returnArray;
+		 }
+	
+		 }
+	
+	
+	
+	 // decryption function
+	 public static byte[] aesDecrypt(String secretKeyString, byte[] encryptedMsg) throws Exception {
+	
+		 // generate AES key from the user input secret key
+		 Key key = generateKey(secretKeyString);
+	
+		 // get the cipher algorithm for AES
+		 Cipher c = Cipher.getInstance("AES");
+	
+		 // specify the decryption mode
+		 c.init(Cipher.DECRYPT_MODE, key);
+	
+		 // decrypt the message
+		 byte[] decValue = c.doFinal(encryptedMsg);
+	
+		 return decValue;
+	 }
+	
+	
+	
+	 private static Key generateKey(String secretKeyString) throws Exception {
+		 // generate AES key from string
+		 Key key = new SecretKeySpec(secretKeyString.getBytes(), "AES");
+		 return key;
+	 }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static String RsaEncript(String message, KeyPair kp)
+	{
 		String text = null;
 		try{
-			/*
-			Log.d("Cipher", "Start msg: " + message);
-	        Cipher cipher = Cipher.getInstance("RSA");
-	        cipher.init(Cipher.ENCRYPT_MODE, kp.getPublic());
-	        
-	        text = getStr(cipher.doFinal(getByte(message)));
-	        Log.i("Cipher", "Encrypted msg: " + text);
-	        
-	        cipher.init(Cipher.DECRYPT_MODE, kp.getPrivate());
-			text = new String(cipher.doFinal(text.getBytes()), Charset.forName("UTF-8"));
-	        
-			Log.w("Cipher", "Decrypted msg: " + text);
-			
-			
-			/*
-			for(byte i = -127; i < 127; i++)
-				Log.d("strings", i + "      " + new String(new byte[]{i}, Charset.forName("UTF-8")));
-	 
-	        PublicKey publicKey = kp.getPublic();
-	        PrivateKey privateKey = kp.getPrivate();
-	 
-	        
-	        text = message;
-	        
-	        
-	        Cipher cipher = Cipher.getInstance("RSA");
-	        cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-	        byte[] x = cipher.doFinal(text.getBytes());
-	        
-	        String xs = getStr(x);
-	        byte[] xsb = getByte(xs);
-	        
-	        
-	        Log.w("Cipher", x.toString());
-	        cipher.init(Cipher.DECRYPT_MODE, privateKey);
-	        byte[] y = cipher.doFinal(x);
-	        Log.w("Cipher", new String(y));
-	        text = new String(y);
-			*/
-			
 			
 	 
 	        PublicKey publicKey = kp.getPublic();
@@ -88,23 +216,23 @@ public class Encriptor {
 	}
 	
 	
-	public static KeyPair genKey()
+	public static KeyPair genKeyPair()
 	{
 		
 		try{
-		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-		keyGen.initialize(2048);
-        KeyPair kp = keyGen.genKeyPair();
-        return kp;
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+			keyGen.initialize(256);
+	        KeyPair kp = keyGen.genKeyPair();
+	        return kp;
 		}catch(Exception e){
-		
+			e.printStackTrace();
 		}
-		return null;
+			return null;
 	}
 	
 	
 	
-	public static String Decript(String message, KeyPair kp)
+	public static String RsaDecript(String message, KeyPair kp)
 	{
 		Log.d("Cipher", "Decript in: " + message);
 		String text = null;

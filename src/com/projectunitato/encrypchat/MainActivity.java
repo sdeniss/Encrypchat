@@ -41,14 +41,14 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+		Encriptor.Run();
 		SharedPreferences prefs = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     String key = prefs.getString(PRIVATE_KEY_KEY, "");
 
     
     if (key.equals("")) {
         // generate KeyPair
-        kp = Encriptor.genKey();
+        kp = Encriptor.genKeyPair();
         ByteArrayOutputStream b = new ByteArrayOutputStream();
         ObjectOutputStream o;
         try {
@@ -95,7 +95,7 @@ public class MainActivity extends Activity {
 				startActivity(sendIntent);
 				
 				*/
-				et.setText(Encriptor.Encript(et.getText().toString(), kp));
+				et.setText(Encriptor.RsaEncript(et.getText().toString(), kp));
 			}
 		});
 		
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				et.setText(Encriptor.Decript(et.getText().toString(), kp));
+				et.setText(Encriptor.RsaDecript(et.getText().toString(), kp));
 			}
 		});
 	}
