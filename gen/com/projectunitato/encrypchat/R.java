@@ -981,7 +981,12 @@ containing a value of this type.
         public static final int abc_textfield_searchview_holo_light=0x7f020054;
         public static final int abc_textfield_searchview_right_holo_dark=0x7f020055;
         public static final int abc_textfield_searchview_right_holo_light=0x7f020056;
-        public static final int ic_launcher=0x7f020057;
+        public static final int button_shape=0x7f020057;
+        public static final int custom_button=0x7f020058;
+        public static final int custom_button_left=0x7f020059;
+        public static final int ic_action_cancel=0x7f02005a;
+        public static final int ic_launcher=0x7f02005b;
+        public static final int twitter=0x7f02005c;
     }
     public static final class id {
         public static final int action_bar=0x7f05001c;
@@ -1029,7 +1034,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f050018;
         public static final int progress_horizontal=0x7f050019;
         public static final int radio=0x7f05002f;
-        public static final int scrollView1=0x7f05003c;
+        public static final int scrollView=0x7f05003c;
         public static final int search_badge=0x7f050032;
         public static final int search_bar=0x7f050031;
         public static final int search_button=0x7f050033;
@@ -1181,6 +1186,7 @@ containing a value of this type.
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f0b0084;
+        public static final int CustomStyleButton=0x7f0b0085;
         /**  Mimic text appearance in select_dialog_item.xml 
          */
         public static final int TextAppearance_AppCompat_Base_CompactMenu_Dialog=0x7f0b0063;

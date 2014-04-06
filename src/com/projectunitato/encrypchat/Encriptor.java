@@ -1,20 +1,27 @@
 package com.projectunitato.encrypchat;
 
 
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.KeyFactory;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.security.SecureRandom;
 import java.security.spec.EncodedKeySpec;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Random;
 
+import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import android.util.Base64;
 import android.util.Log;
 
 
@@ -646,6 +653,16 @@ public class Encriptor {
 			b[i] = (byte) str.charAt(i);
 		return b;
 	}
+	
+	
+	
+	
+	
+
+	
+
+	
+	
 	
 	
 	

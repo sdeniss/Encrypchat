@@ -8,15 +8,18 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
@@ -31,6 +34,7 @@ public class MainActivity extends Activity {
 	Encriptor encriptor;
 	SharedPreferences prefs;
 	CheckBox sendSmsCheckbox, copyCheckBox;
+	ScrollView scrollView;
 	static ClipboardManager clipboard;
 	
 	@Override
@@ -99,6 +103,14 @@ public class MainActivity extends Activity {
 		clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE); 
 		sendSmsCheckbox = (CheckBox) findViewById(R.id.checkbox_sendSms);
 		copyCheckBox = (CheckBox) findViewById(R.id.checkbox_copy);
+		scrollView = (ScrollView) findViewById(R.id.scrollView);
+		
+		btnEncrypt.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf"));
+		btnDecrypt.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf"));
+		messageEt.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/Roboto-Light.ttf"));
+		sendSmsCheckbox.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RobotoCondensed-Light.ttf"));
+		copyCheckBox.setTypeface(Typeface.createFromAsset(getAssets(), "fonts/RobotoCondensed-Light.ttf"));
+	
 		
 		if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB)
 			copyCheckBox.setVisibility(View.INVISIBLE);
@@ -117,11 +129,13 @@ public class MainActivity extends Activity {
 				startActivity(sendIntent);
 				
 				*/
-				while(keyEt.getText().toString().length() < 16)
-					keyEt.setText(keyEt.getText().toString() + 'x');
-				encriptor.setAESKey(keyEt.getText().toString());
+				String key = keyEt.getText().toString();
+				while(key.length() < 16)
+					key += 'x';
+				encriptor.setAESKey(key);
 				prefs.edit().putString(KEY_AES_KEY, keyEt.getText().toString()).apply();
 				messageEt.setText(encriptor.AESEncrypt(messageEt.getText().toString()));
+			
 				int currentapiVersion = android.os.Build.VERSION.SDK_INT;
 				if(sendSmsCheckbox.isChecked())
 				{
@@ -132,6 +146,7 @@ public class MainActivity extends Activity {
 				}
 				if (copyCheckBox.isChecked() && currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
 				    copyText(messageEt.getText().toString());
+				scrollView.scrollTo(0, scrollView.getBottom());
 				
 			}
 			
@@ -143,9 +158,10 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				try {
-					while(keyEt.getText().toString().length() < 16)
-						keyEt.setText(keyEt.getText().toString() + 'x');
-					encriptor.setAESKey(keyEt.getText().toString());
+					String key = keyEt.getText().toString();
+					while(key.length() < 16)
+						key += 'x';
+					encriptor.setAESKey(key);
 					prefs.edit().putString(KEY_AES_KEY, keyEt.getText().toString()).apply();
 					messageEt.setText(encriptor.AESDecrypt(messageEt.getText().toString()));
 				} catch (Exception e) {
