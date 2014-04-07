@@ -22,12 +22,31 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
+<<<<<<< HEAD
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
         public static final int button_decrypt=0x7f080002;
         public static final int button_encrypt=0x7f080001;
         public static final int et_message=0x7f080000;
+=======
+        public static final int button_shape=0x7f020000;
+        public static final int custom_button=0x7f020001;
+        public static final int custom_button_left=0x7f020002;
+        public static final int ic_action_cancel=0x7f020003;
+        public static final int ic_launcher=0x7f020004;
+        public static final int twitter=0x7f020005;
+    }
+    public static final class id {
+        public static final int button_decrypt=0x7f080005;
+        public static final int button_encrypt=0x7f080004;
+        public static final int checkbox_copy=0x7f080007;
+        public static final int checkbox_sendSms=0x7f080006;
+        public static final int et_key=0x7f080001;
+        public static final int et_message=0x7f080003;
+        public static final int scrollView=0x7f080000;
+        public static final int toggle_show_key=0x7f080002;
+>>>>>>> origin/master
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
@@ -67,5 +86,9 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f060001;
+<<<<<<< HEAD
+=======
+        public static final int CustomStyleButton=0x7f060002;
+>>>>>>> origin/master
     }
 }
