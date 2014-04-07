@@ -1,31 +1,95 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<ScrollView
+   		xmlns:android="http://schemas.android.com/apk/res/android"
+	    xmlns:tools="http://schemas.android.com/tools"
+	    android:id="@+id/scrollView"
+	    android:layout_width="match_parent"
+	    android:layout_height="fill_parent"
+	    android:background="@android:color/white" >
+	    
+	<LinearLayout 
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:orientation="vertical" >
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <EditText
+	            android:id="@+id/et_key"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="69"
+	            android:hint="AES Key"
+	            android:maxLength="16"
+	            android:inputType="textPassword"
+	            android:enabled="false" >
+	
+	            <requestFocus />
+	        </EditText>
+	
+	        <ToggleButton
+	            android:id="@+id/toggle_show_key"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="1"
+	            android:text="ToggleButton"
+	            android:textOn="On"
+	            android:textOff="Off" />
+	
+	    </LinearLayout>
+	    
+	    <EditText
+	        android:id="@+id/et_message"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:hint="Message"
+	        android:inputType="textMultiLine" />
+	    
+		<LinearLayout 
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:orientation="horizontal" 
+		    android:padding="10dp">
+		    
+		    
+		    <Button
+		        android:id="@+id/button_encrypt"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Encrypt"
+		        style="@style/CustomStyleButton"
+		        android:paddingRight="5dp"
+		        android:background="@drawable/custom_button_left" />
+		
+		    <Button
+		        android:id="@+id/button_decrypt"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="1"
+		        android:text="Decrypt" 
+		        style="@style/CustomStyleButton"
+		        android:paddingLeft="5dp"
+		        android:background="@drawable/custom_button" />
+		    
+	    </LinearLayout>
 
-   <EditText
-        android:id="@+id/et_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:ems="10"
-        android:hint="Message" >
-    </EditText>
+		<CheckBox
+		    android:id="@+id/checkbox_sendSms"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Send SMS" />
 
-    <Button
-        android:id="@+id/button_encrypt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/et_message"
-        android:layout_centerHorizontal="true"
-        android:text="Encrypt and send" />
-
-    <Button
-        android:id="@+id/button_decrypt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_encrypt"
-        android:layout_centerHorizontal="true"
-        android:text="Decrypt" />
-
-</RelativeLayout>
+		<CheckBox
+		    android:id="@+id/checkbox_copy"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:text="Copy to clipboard" />
+	
+		
+			
+	
+	</LinearLayout>
+	
+</ScrollView>
