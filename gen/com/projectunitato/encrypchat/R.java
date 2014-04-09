@@ -27,20 +27,28 @@ public final class R {
         public static final int custom_button_left=0x7f020002;
         public static final int ic_action_cancel=0x7f020003;
         public static final int ic_launcher=0x7f020004;
-        public static final int twitter=0x7f020005;
+        public static final int image1=0x7f020005;
+        public static final int image2=0x7f020006;
     }
     public static final class id {
-        public static final int button_decrypt=0x7f080005;
-        public static final int button_encrypt=0x7f080004;
-        public static final int checkbox_copy=0x7f080007;
-        public static final int checkbox_sendSms=0x7f080006;
-        public static final int et_key=0x7f080001;
-        public static final int et_message=0x7f080003;
-        public static final int scrollView=0x7f080000;
-        public static final int toggle_show_key=0x7f080002;
+        public static final int button_decrypt=0x7f080008;
+        public static final int button_encrypt=0x7f080007;
+        public static final int button_sendMsg=0x7f080002;
+        public static final int checkbox_copy=0x7f08000a;
+        public static final int checkbox_sendSms=0x7f080009;
+        public static final int et_key=0x7f080004;
+        public static final int et_message=0x7f080006;
+        public static final int img=0x7f08000b;
+        public static final int list=0x7f080000;
+        public static final int msg_et=0x7f080001;
+        public static final int scrollView=0x7f080003;
+        public static final int toggle_show_key=0x7f080005;
+        public static final int txt=0x7f08000c;
     }
     public static final class layout {
-        public static final int activity_main=0x7f030000;
+        public static final int activity_chat=0x7f030000;
+        public static final int activity_main=0x7f030001;
+        public static final int chat_single=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f070000;

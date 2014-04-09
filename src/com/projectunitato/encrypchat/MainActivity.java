@@ -12,6 +12,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.Sampler;
 import android.text.InputType;
 import android.util.Log;
 import android.view.View;
@@ -42,9 +43,7 @@ public class MainActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
-		
-		
+		Encriptor.SampleTransmissionStart();
 		
 		prefs = this.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
 	    String aespref = prefs.getString(KEY_AES_KEY, "");
